@@ -43,6 +43,7 @@
         #btnNuevo {font-size:28px; color:black; font-weight:bolder; text-shadow:1px 1px 1px gainsboro;padding-left:5px;cursor:pointer;}
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./servicios.js"></script>
     <script>
     	$(function() {
         	$("#login").keypress(function(e) {
@@ -53,11 +54,15 @@
 
         	$("#login, #password").mouseenter(function () {$(this).css('border-color','orange');$(this).focus();});
         	$("#login, #password").mouseout(function () {$(this).css('border-color','black');});
-        	
-        	
+        	        	
             $("#btnNuevo").mouseenter(function () {$(this).css('color','orange');$(this).focus();});
             $("#btnNuevo").mouseout(function () {$(this).css('color','black');});
-            $("#btnNuevo").click(function() {alert($(this).attr('id'));});
+            $("#btnNuevo").click(function() {
+                var service = new WebService('existeJugador');
+                service.Get().then(function(rest) {
+                    if (rest===true) alert("TRUE"); else alert("GASLE"); 
+                })  
+            });
     	});
     	
     </script>
@@ -67,7 +72,7 @@
     		<div class="Sil2">
     			<table style="width:100%;">   				
     				<tr style="height:50%;">
-    					<td style="height:50%;min-width:100px;padding-right:3px;">LOGIN:</td>
+    					<td style="height:50%;min-width:100px;padding-right:3px;">USUARIO:</td>
     					<td style="width:100%;"><input type="text" id="login"></td>
     				</tr>
     				<tr style="height:50%;">
