@@ -7,7 +7,7 @@
  * @class WebService
  */
 class WebService {	
-  constructor(param) { this.parametro = param; }
+  constructor() { }
 
   /**
    * Sample Get Fetch using HTTP Bin
@@ -20,10 +20,10 @@ class WebService {
    * @memberof WebService
    * @returns {Promise}
    */
-  Get() {
+  Get(parametros) {
     return new Promise((resolve, reject) => {
       // We fetch the API endpoint    	
-      fetch('http://localhost/satrapia/satrapia/controlador/cliente.php?funcion='+this.parametro).then((response) => {
+      fetch('http://localhost/satrapia/satrapia/controlador/cliente.php?'+parametros).then((response) => {
         if (response.status !== 200) {
           // Not success
           resolve(response.text());

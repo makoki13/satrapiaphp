@@ -58,13 +58,18 @@
             $("#btnNuevo").mouseenter(function () {$(this).css('color','orange');$(this).focus();});
             $("#btnNuevo").mouseout(function () {$(this).css('color','black');});
             $("#btnNuevo").click(function() {
-                var service = new WebService('existeJugador');
+                var service = new WebService();
+                
                 /*
-                service.Get().then(function(rest) {
+                const params = { funcion: 'existeJugador', usuario: 'pablo', pass: 'olbap' };
+				const urlParams = new URLSearchParams(Object.entries(params));
+                service.Get(urlParams).then(function(rest) {
                     if (rest===true) alert("TRUE"); else alert("GASLE"); 
                 })
                 */
+                
                 formulario = new Object();
+                formulario.funcion = 'existeJugador';
                 formulario.usuario = 'pablo';
                 formulario.pass = 'olbap';
                 service.Post(formulario).then(function(rest) {
