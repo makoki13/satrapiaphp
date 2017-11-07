@@ -63,7 +63,7 @@ class WebService {
       });
 
       // We fetch Post the API
-      fetch('https://httpbin.org/post', {
+      fetch('http://localhost/satrapia/satrapia/controlador/cliente.php?funcion='+this.parametro, {
         method: 'post',
         body: formData
       }).then((response) => {

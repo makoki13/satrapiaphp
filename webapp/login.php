@@ -59,7 +59,15 @@
             $("#btnNuevo").mouseout(function () {$(this).css('color','black');});
             $("#btnNuevo").click(function() {
                 var service = new WebService('existeJugador');
+                /*
                 service.Get().then(function(rest) {
+                    if (rest===true) alert("TRUE"); else alert("GASLE"); 
+                })
+                */
+                formulario = new Object();
+                formulario.usuario = 'pablo';
+                formulario.pass = 'olbap';
+                service.Post(formulario).then(function(rest) {
                     if (rest===true) alert("TRUE"); else alert("GASLE"); 
                 })  
             });
