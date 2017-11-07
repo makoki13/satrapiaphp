@@ -16,6 +16,13 @@
         exit();
     }
     
+    if (!empty($_POST)) {
+        $servicio = $_POST['servicio'];
+    }
+    if (!empty($_GET)) {
+        $servicio = $_GET['servicio'];
+    }
+        
     if ($servicio=="existeUsuario") {
         $result1=$client->call('existeUsuario', array('usuario'=>'John', 'clave'=>'nohJ'));        
     }

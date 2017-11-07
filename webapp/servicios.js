@@ -7,36 +7,36 @@
  * @class WebService
  */
 class WebService {	
-  constructor() { }
+	constructor() { }
 
-  /**
-   * Sample Get Fetch using HTTP Bin
-   *
-   * @example
-      var service = new WebService();
-      service.Get().then((success => {
-        console.log(success);
-      }))
-   * @memberof WebService
-   * @returns {Promise}
-   */
-  Get(parametros) {
-    return new Promise((resolve, reject) => {
-      // We fetch the API endpoint    	
-      fetch('http://localhost/satrapia/satrapia/controlador/cliente.php?'+parametros).then((response) => {
-        if (response.status !== 200) {
-          // Not success
-          resolve(response.text());
-        } else {
-          // success
-        	resolve(response.json());
-        }
-      }).catch(err => {
-        // Service Error
-        reject(err);
-      });
-    });
-  }
+	/**
+	* Sample Get Fetch using HTTP Bin
+	*
+	* @example
+		var service = new WebService();
+      	service.Get().then((success => {
+        	console.log(success);
+      	}))
+	* @memberof WebService
+	* @returns {Promise}
+	*/
+	Get(parametros) {
+		return new Promise((resolve, reject) => {
+			// We fetch the API endpoint    	
+			fetch('http://localhost/satrapia/satrapia/controlador/cliente.php?'+parametros).then((response) => {
+				if (response.status !== 200) {
+					// Not success
+					resolve(response.text());
+				} else {
+					// success
+					resolve(response.json());
+				}
+			}).catch(err => {
+				// Service Error
+				reject(err);
+			});
+		});
+	}
 
   /**
    * Sample Post Fetch using HTTP Bin
@@ -58,12 +58,18 @@ class WebService {
       var formData = new FormData();
 
       // we add all object items to the new form
-      forEach(object, (value, key) => {
-        formData.append(key, value);
-      });
-
+      
+      for(var propt in object) {    	  
+    	  formData.append(propt, object[propt]);
+      }
+      /*
+      for (var key of formData.entries()) {
+          console.log(key[0] + ', ' + key[1]);
+      }
+      */
+      
       // We fetch Post the API
-      fetch('http://localhost/satrapia/satrapia/controlador/cliente.php?funcion='+this.parametro, {
+      fetch('http://localhost/satrapia/satrapia/controlador/cliente.php', {
         method: 'post',
         body: formData
       }).then((response) => {
@@ -72,7 +78,8 @@ class WebService {
           resolve(response.text());
         } else {
           // Success
-          resolve(response.text());
+        	//alert(response.json());
+          resolve(response.json());
         }
       }).catch(err => {
         // Service Error
