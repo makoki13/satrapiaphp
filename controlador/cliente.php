@@ -16,7 +16,9 @@
         exit();
     }
     
-    // Call the hello method
-    $result1=$client->call('existeUsuario', array('usuario'=>'John', 'clave'=>'nohJ'));
-    print_r(json_encode($result1));    
+    if ($servicio=="existeUsuario") {
+        $result1=$client->call('existeUsuario', array('usuario'=>'John', 'clave'=>'nohJ'));        
+    }
+    
+    print_r(json_encode($result1));
 ?>
