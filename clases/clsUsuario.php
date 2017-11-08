@@ -43,7 +43,9 @@ class Usuario extends Satrapia
     public function existeUsuario() {        
         include_once '../modelo/clsBD.php';
         $oBD = new BD();
-        $reg = $oBD->consulta("SELECT COUNT(*) FROM usuarios.Maestro WHERE UPPER(Login)=$$".strtoupper($this->login->get())."$$ AND Password='".$this->password->get()."'", $filas);
+        $sql="SELECT COUNT(*) FROM usuarios.Maestro WHERE UPPER(Login)=$$".strtoupper($this->login->get())."$$ AND Password='".$this->password->get()."'";        
+        $reg = $oBD->consulta($sql, $filas);
+        
         $resultado = false; if ($filas > 0) $resultado = (pg_result($reg,0,0)>0); 
         return $resultado;
     }

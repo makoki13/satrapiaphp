@@ -1,7 +1,7 @@
 <?php
     use clases\Usuario;
 
-    function existeUsuario($usuario, $clave) {
+    function existeUsuario($usuario, $clave) {   
         include_once '../clases/clsUsuario.php';
         $candidato = new Usuario();
         $candidato->setLogin($usuario);

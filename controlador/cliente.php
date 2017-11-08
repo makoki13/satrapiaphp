@@ -4,7 +4,7 @@
     require_once('./nusoap-0.9.5/lib/nusoap.php');
     
     // This is your Web service server WSDL URL address
-    $wsdl = "http://localhost/satrapia/satrapia/controlador/server.php?wsdl";
+    $wsdl = "http://localhost:81/satrapia/controlador/server.php?wsdl";
 
     // Create client object
     $client = new nusoap_client($wsdl, true);
@@ -23,10 +23,10 @@
         $servicio = $_GET['servicio'];
     }
         
-    if ($servicio=="existeUsuario") {
+    if ($servicio=="existeUsuario") {        
         $usuario = $_GET['usuario'];
         $pass = $_GET['pass'];
-        $result1=$client->call('existeUsuario', array('usuario'=>$usuario, 'clave'=>$pass));        
+        $result1=$client->call('existeUsuario', array('usuario'=>$usuario, 'clave'=>$pass)); 
     }
     
     print_r(json_encode($result1));

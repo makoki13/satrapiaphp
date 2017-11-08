@@ -7,11 +7,9 @@
  * @class WebService
  */
 class WebService {	
-	constructor() { }
+	constructor(puertoWS) { this.puerto = puertoWS;  }
 
 	/**
-	* Sample Get Fetch using HTTP Bin
-	*
 	* @example
 		var service = new WebService();
       	service.Get().then((success => {
@@ -22,8 +20,7 @@ class WebService {
 	*/
 	Get(parametros) {
 		return new Promise((resolve, reject) => {
-			// We fetch the API endpoint    	
-			fetch('http://localhost/satrapia/satrapia/controlador/cliente.php?'+parametros).then((response) => {
+			fetch('http://localhost:'+this.puerto+'/satrapia/controlador/cliente.php?'+parametros).then((response) => {
 				if (response.status !== 200) {
 					// Not success
 					resolve(response.text());
@@ -69,7 +66,7 @@ class WebService {
 			*/
       
 			// We fetch Post the API
-			fetch('http://localhost/satrapia/satrapia/controlador/cliente.php', {
+			fetch('http://localhost:'+this.puerto+'/satrapia/controlador/cliente.php', {
 				method: 'post',
 				body: formData
 			}).then((response) => {

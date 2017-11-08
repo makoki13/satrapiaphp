@@ -1,7 +1,9 @@
 <?php 
+    header('Access-Control-Allow-Origin: *');
+    
     session_start();
     $_SESSION = array();
-    session_destroy()
+    session_destroy()        
 ?>
 <!DOCTYPE html>
 <html> 	
@@ -16,13 +18,10 @@
     <style>
         html {height: 90%;}
         body {height: 90vh;}
-        .Sil{max-width: 100%;height:100vh;background: url(./login.jpg) no-repeat; border:0px solid black;
-            background-color:black;
-            position:absolute;
+        .Sil{width: 100%;height:100%;background: url(./login.jpg) no-repeat; border:0px solid black;
+            background-color:black;            
             left:0%;
             top:0%;
-            width:100%;
-            height:100%;
             margin: 0px;
             opacity:0.6;
         }
@@ -40,12 +39,31 @@
         
         td {font-size:48px; color:black; font-weight:bolder; text-shadow:1px 1px 1px gainsboro; text-align:right;}
         input {font-size:48px; color:#b30000; font-weight:bolder; text-shadow:1px 1px 1px gainsboro;padding-left:5px;border:2px solid black;}
-        #btnNuevo {font-size:28px; color:black; font-weight:bolder; text-shadow:1px 1px 1px gainsboro;padding-left:5px;cursor:pointer;}
+        #btnNuevo {font-size:28px; color:black; font-weight:bolder; text-shadow:1px 1px 1px gainsboro;padding-left:5px;cursor:pointer; border:2px solid black;}
+        
+        #bloqueo{position:absolute;top:0px;left:0px;right:0%; bottom:.6%;border:1px solid #000000;background:#DDDDDD;z-index:3;filter: alpha(opacity=50); opacity: .5;visibility:hidden;}
+        #nuevaVersion{position: fixed;top: 50%;left: 50%;-webkit-transform: translate(-50%, -50%);transform: translate(-50%, -50%);width: 80%;height: 80%;background-color:white;
+            visibility:hidden;z-index:4;border:2px solid black;alpha(opacity=70); opacity: .7;}
+        
+        ui-layout-pane { /* all 'panes' */		background: white;border: 1px solid black;overflow: hidden !important;}
+        .ui-layout-resizer { /* all 'resizer-bars' */ background: silver;}
+        .ui-layout-toggler { /* all 'toggler-buttons' */ background: red;}
+        .ui-layout-pane-north {overflow: hidden !important;}
+        .ui-layout-pane-center {overflow: hidden !important;}
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-layout/1.4.3/layout-default.min.css">
+    <script src="jquery.layout.js"></script>    
     <script src="./servicios.js"></script>
     <script>
+    	var myLayout;
+    	
     	$(function() {
+    		myLayout = $('body').layout({
+    			north__size: 100,
+                slidable: false                
+            });
+            
         	$("#login").keypress(function(e) {
         		if(e.which == 13) {
         	        $("#password").focus();
@@ -57,14 +75,35 @@
         	        	
             $("#btnNuevo").mouseenter(function () {$(this).css('color','orange');$(this).focus();});
             $("#btnNuevo").mouseout(function () {$(this).css('color','black');});
-            $("#btnNuevo").click(function() {
-                var service = new WebService();
+            $("#btnNuevo").click(function() {                
+                var idJugador = 1;
+            	document.getElementById('bloqueo').style.visibility='visible';
+                document.getElementById('nuevaVersion').style.visibility='visible';                
+                document.getElementById('frmNuevaVersion').src="mensaje.html?idJugador="+idJugador;
+                return;
                 
-                
+                                
+                var service = new WebService(81);
+                                
                 const params = { servicio: 'existeUsuario', usuario: 'makoki', pass: 'mak0k1ma66' };
 				const urlParams = new URLSearchParams(Object.entries(params));
                 service.Get(urlParams).then(function(rest) {
-                    if (rest===true) alert("TRUE"); else alert("GASLE"); 
+                    alert(rest);
+                    /*
+                    if (rest===true) {
+                        const params = { servicio: 'idUsuario', usuario: 'makoki'};
+        				const urlParams = new URLSearchParams(Object.entries(params));
+        				service.Get(urlParams).then(function(rest) {
+            				alert(rest);
+            				 
+            					Se devuelve un objecto con los siguientes campos:
+            					id: id de jugador
+            					status: 0, activo, 1: con alerta, 2: bloqueado
+            					nivel: 0: en tutorial, 1: en juego
+            				
+        				});
+                    }
+                    */
                 })
                 
 
@@ -82,23 +121,37 @@
     	
     </script>
     </head>
-    <body onload="document.getElementById('login').focus();">
-    	<div class="Sil">
-    		<div class="Sil2">
-    			<table style="width:100%;">   				
-    				<tr style="height:50%;">
-    					<td style="height:50%;min-width:100px;padding-right:3px;">USUARIO:</td>
-    					<td style="width:100%;"><input type="text" id="login"></td>
-    				</tr>
-    				<tr style="height:50%;">
-    					<td style="height:50%;padding-right:3px;">PASSWORD:</td>
-    					<td><input type="password" id="password"></td>
-    				</tr>
-    				<tr>
-    					<td colspan="2" style="text-align:center;padding-top:20px;"><button id="btnNuevo">Dar de alta un nuevo usuario</button></td>
-    				</tr>
-    			</table>
-    		</div>
+    <body onload="document.getElementById('login').focus();">    	            
+    	<div class="ui-layout-center">    		
+    		<table class="Sil" style="width:100%;height:100%;vertical-align:middle;" align="center">
+    			<tr style="height:60%;vertical-align: bottom;">
+    				<td>
+    					<table style="width:100%;height:100%;">    							    							
+    						<tr style="height:50%;vertical-align: bottom;">
+    							<td style="width:20%;padding-right:3px;">&nbsp;</td>
+    							<td style="width:25%;padding-right:3px;">USUARIO:</td>
+    							<td style="width:25%;"><input type="text" id="login"></td>
+    							<td style="width:30%;padding-right:3px;">&nbsp;</td>
+    						</tr>
+    						<tr style="height:50%;vertical-align: top;">
+    							<td style="padding-right:3px;">&nbsp;</td>
+    							<td style="padding-right:3px;padding-top:10px;">PASSWORD:</td>
+    							<td style="padding-top:10px;"><input type="password" id="password"></td>
+    							<td style="padding-right:3px;">&nbsp;</td>
+    						</tr>	
+    					</table>
+    				</td>
+    			</tr>    				
+    			<tr style="height:40%;vertical-align: top;">
+    				<td colspan="2" style="text-align:center;padding-top:20px;"><button id="btnNuevo">Dar de alta un nuevo usuario</button></td>    					
+    			</tr>    				
+    		</table>    		
     	</div>
+    	
+    	<div id="bloqueo"></div>
+
+        <div id="nuevaVersion">
+            <iframe id="frmNuevaVersion" style="width:100%;height:100%;border:0px;"></iframe>
+        </div>
     </body>
 </html>
