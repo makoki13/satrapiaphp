@@ -61,7 +61,7 @@
                 var service = new WebService();
                 
                 
-                const params = { servicio: 'existeUsuario', usuario: 'pablo', pass: 'olbap' };
+                const params = { servicio: 'existeUsuario', usuario: 'makoki', pass: 'mak0k1ma66' };
 				const urlParams = new URLSearchParams(Object.entries(params));
                 service.Get(urlParams).then(function(rest) {
                     if (rest===true) alert("TRUE"); else alert("GASLE"); 

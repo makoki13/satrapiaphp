@@ -1,6 +1,8 @@
 <?php
 namespace clases;
 
+use modelo\BD;
+
 include_once 'clsSatrapia.php';
 include_once 'clsLogin.php';
 include_once 'clsPassword.php';
@@ -37,6 +39,14 @@ class Usuario extends Satrapia
     public function getLogin() {return $this->login->get(); }
     
     public function getPassword() {return $this->password->get(); }
+    
+    public function existeUsuario() {        
+        include_once '../modelo/clsBD.php';
+        $oBD = new BD();
+        $reg = $oBD->consulta("SELECT COUNT(*) FROM usuarios.Maestro WHERE UPPER(Login)=$$".strtoupper($this->login->get())."$$ AND Password='".$this->password->get()."'", $filas);
+        $resultado = false; if ($filas > 0) $resultado = (pg_result($reg,0,0)>0); 
+        return $resultado;
+    }
     
     private function _chkAcceso() {
         return -1;

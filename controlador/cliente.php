@@ -24,7 +24,9 @@
     }
         
     if ($servicio=="existeUsuario") {
-        $result1=$client->call('existeUsuario', array('usuario'=>'John', 'clave'=>'nohJ'));        
+        $usuario = $_GET['usuario'];
+        $pass = $_GET['pass'];
+        $result1=$client->call('existeUsuario', array('usuario'=>$usuario, 'clave'=>$pass));        
     }
     
     print_r(json_encode($result1));

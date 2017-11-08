@@ -1,6 +1,12 @@
 <?php
+    use clases\Usuario;
+
     function existeUsuario($usuario, $clave) {
-        return true;
+        include_once '../clases/clsUsuario.php';
+        $candidato = new Usuario();
+        $candidato->setLogin($usuario);
+        $candidato->setPassword($clave);        
+        return $candidato->existeUsuario();
     }
         
     //Registramos las funciones del modulo
